@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+        {{ course.description|truncatewords:155 }}
+
+
+{% endblock %}
+{% block title %}
+    {% if department %}
+        {{ course.name }} - School Store
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+        <p> <a href="{% url 'deapp:allProdCat' %}">Home</a> | <a  href="{{course.department.get_url}}">{{course.department}}</a> | {{course.name}}</p>
+    </div>
+</div>
+<div class="container">
+
+
+<br>
+<div class="row" >
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div style="min-width:18rem;" >
+            <img src="{{course.image.url}}" alt="{{course.name}}" style="box-shadow:10px 10px 10px 0 gray;">
+        </div>
+    </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 ">
+      <div>
+
+
+
+        <h1 class="my_prod_title"><b>{{course.name}}</b></h1>
+
+        <p class="my_title">Course Description</p>
+        <p class="text-justify my_prod_text">{{course.description}}</p>
+
+
+
+
+      </div>
+</div>
+</div>
+</div>
+{% endblock %}
