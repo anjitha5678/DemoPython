@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<head>
+
+    <title>School Store</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+  <style>
+    @media (min-width: 576px) {
+      .jumbotron {
+        padding: 1rem 2rem;
+      }
+    }
+
+    .tdaction {
+      width: 15%;
+    }
+
+    .tdSr {
+      width: 7%;
+    }
+
+    .other label {
+      color: #6154d1;
+    }
+
+    .other input {
+      border: 2px solid #6154d1;
+    }
+    label {
+      margin-bottom: 0;
+    }
+    .form-control {
+      border:1px solid grey;
+    }
+  </style>
+
+
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron text-center bg-success text-white">
+      <h1>Personal Info</h1>
+
+    </div>
+    <div class="row pt-3">
+      <div class="col-md-12 col-sm-12 col-12 p-2 ">
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="">Full Name              :</label>
+              <input type="text" class="form-control" id="" placeholder="Full Name">
+            </div><br>
+            <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">DOB         :</label>
+              <input type="date" class="form-control" id="inputEmail4" placeholder="Date of birth">
+            </div><br>
+              <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="inputEmail4">Age         :</label>
+              <input type="text" class="form-control" id="" placeholder="Enter your age">
+            </div><br>
+                <div class="form-group col-md-3">
+                   <label>Gender       : <br></label><br>
+                  <input type="radio" name="Gender" placeholder="enter your Gender">male<br>
+                       <input type="radio" name="Gender" placeholder="enter your Gender">female<br>
+                </div><br>
+            <div class="form-group col-md-3 offset-md-1">
+              <label for="inputPassword4">Phone Number :</label>
+              <input type="text" class="form-control" id="inputPassword4" placeholder="Enter your phone number">
+            </div>
+          </div><br>
+                <div class="form-group col-md-3 offset-md-1">
+              <label for="inputPassword4">Mail ID :</label>
+              <input type="email" class="form-control" id="inputPassword4" placeholder="Enter your email">
+            </div>
+          </div><br>
+                <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputAddress">Address 1:</label>
+                <textarea class="form-control" id="inputAddress" placeholder="Enter your address"></textarea>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputAddress2">Address 2 :</label>
+                <textarea class="form-control" id="inputAddress2" placeholder="Enter your address 2"></textarea>
+              </div>
+            </div>
+          </div><br>
+
+        {{ personform.as_p }}
+                 <div class="form-group col-md-2 other">
+              <label class="divOtherState ">Other Course</label><br>
+              <input type="text" class="form-control divOtherCourse " id="dpdlOtherCourse" placeholder="Other Course">
+            </div><br>
+        </div><br>
+             <div class="form-group col-md-2">
+              <label for="inputState">Purpose :</label>
+              <select id="dpdlPurpose" class="form-control">
+                <option selected>Debit Note Book</option>
+                <option selected>Pen</option>
+                <option selected>Exam pappers</option>
+                <option selected>Reference Books</option>
+
+                <option selected>choose purpose</option>
+              </select>
+            </div><br>
+             <div class="form-group col-md-2 other">
+               <label>Materials Provide          : </label><br><input type="checkbox" name="materials" placeholder="enter your priorities">Debit Note Book<br>
+                       <input type="checkbox" name="materials" placeholder="enter your Gender">Pen<br>
+                       <input type="checkbox" name="materials" placeholder="enter your Gender">Exam pappers<br>
+                       <input type="checkbox" name="materials" placeholder="enter your Gender">Reference Books<br>
+            </div><br>
+            <div><br>
+                <div><br>
+
+              <a href="http://127.0.0.1:8000/depapp/form" class="btn btn-warning">Submit</a><br>
+            <a href="http://127.0.0.1:8000/" class="btn btn-primary">Logout</a><br>
+                    </div>
+                </div>
+    </form>
+
+    <script>
+        $(document).ready(function(){
+
+            $('#id_courses').empty();
+
+            var sStrings = JSON.parse('{{ json_s_strings | escapejs }}');
+            var cStrings = JSON.parse('{{ json_c_strings | escapejs }}');
+            var eStrings = JSON.parse('{{ json_e_strings | escapejs }}');
+            var pStrings = JSON.parse('{{ json_p_strings | escapejs }}');
+            var bStrings = JSON.parse('{{ json_b_strings | escapejs }}');
+
+            $('#id_department').on('change', function(){
+
+                var department = $('#id_department').val();
+
+                if(department == ' Science'){
+
+                    $('#id_courses').empty();
+
+                    var length = sStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        courses = sStrings[i];
+                        $('#id_courses').append(
+
+                            `
+                            <option value="${courses}">
+                                ${courses}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+
+                else if(department == ' Commerce'){
+
+                    $('#id_courses').empty();
+
+                    var length = cStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        courses = cStrings[i];
+                        $('#id_courses').append(
+
+                            `
+                            <option value="${courses}">
+                                ${courses}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(department == 'Economics'){
+
+                    $('#id_courses').empty();
+
+                    var length = eStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        courses = eStrings[i];
+                        $('#id_courses').append(
+
+                            `
+                            <option value="${courses}">
+                                ${courses}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(department == 'Psycology'){
+
+                    $('#id_courses').empty();
+
+                    var length = pStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        courses = pStrings[i];
+                        $('#id_courses').append(
+
+                            `
+                            <option value="${courses}">
+                                ${courses}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(department == 'Biochemistry'){
+
+                    $('#id_courses').empty();
+
+                    var length = bStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        courses = bStrings[i];
+                        $('#id_courses').append(
+
+                            `
+                            <option value="${courses}">
+                                ${courses}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+
+
+                else{
+
+                    $('#id_courses').empty();
+
+                }
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
